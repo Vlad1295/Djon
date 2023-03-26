@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Djon/static/css/main.158813b5.css",
+    "main.js": "/Djon/static/js/main.65b68c3e.js",
+    "index.html": "/Djon/index.html",
+    "main.158813b5.css.map": "/Djon/static/css/main.158813b5.css.map",
+    "main.65b68c3e.js.map": "/Djon/static/js/main.65b68c3e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.158813b5.css",
+    "static/js/main.65b68c3e.js"
+  ]
+}

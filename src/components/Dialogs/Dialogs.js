@@ -28,7 +28,7 @@ function Dialog(props) {
     let body = e.target.value;
     props.newMessageBody(body);
   };
-  if (!props.isAuth) return <Navigate to={"/login"} />;
+  
   return (
     <div className={d.dialogs}>
       <div className={d.dialogItems}>{dialogs}</div>

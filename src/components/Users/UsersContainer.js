@@ -9,8 +9,9 @@ import {
 } from "../Redux/Reducer/usersPageReducer";
 import Users from "./Users";
 import Preloader from "./Toggle";
+import { withAuthNavigate } from "../../HOC/withAuthNavigate";
 
-class UsersAPIComponent extends React.Component {
+class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
   }
@@ -33,7 +34,7 @@ class UsersAPIComponent extends React.Component {
           unfollow={this.props.unfollow}
           toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
           followingInProgress={this.props.followingInProgress}
-          isAuth={this.props.isAuth} 
+          isAuth={this.props.isAuth}
         />
       </>
     );
@@ -48,18 +49,16 @@ let mapStateToProps = (state) => {
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
     followingInProgress: state.usersPage.followingInProgress,
-    isAuth: state.auth.isAuth,
+    
   };
 };
 
-const UsersContainer = connect(mapStateToProps, {
+let ConnectedAuthNavigate = withAuthNavigate(UsersContainer);
+
+export default connect(mapStateToProps, {
   follow,
   unfollow,
-
   setCurrentPage,
-
   getUsersThunk,
   toggleIsFollowingProgress,
-})(UsersAPIComponent);
-
-export default UsersContainer;
+})(ConnectedAuthNavigate);

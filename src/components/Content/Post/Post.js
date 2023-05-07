@@ -19,7 +19,7 @@ function MyPosts(props) {
     let text = newPostElement.current.value;
     props.updateNewPostActionCreater(text);
   };
-if (!props.isAuth) return <Navigate to={"/login"} />;
+
   return (
     <div className={pa.postBlack}>
       <h3>My posts</h3>

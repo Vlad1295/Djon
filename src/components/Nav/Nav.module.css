@@ -1,0 +1,13 @@
+.nav {
+  grid-area: nav;
+  background-color: blanchedalmond;
+  font-size: 6px;
+  padding: 10px;
+  line-height: 10px;
+}
+.nav a {
+  text-decoration: none;
+}
+.item a:hover {
+  color: green;
+}

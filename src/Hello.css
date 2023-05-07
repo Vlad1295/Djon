@@ -1,0 +1,13 @@
+.gr {
+  display: grid;
+  grid-template-areas:
+    "hello hello"
+    "nav content";
+  grid-template-columns: 100px 1fr;
+  padding: 5px;
+}
+.gr_content {
+  grid-area: content;
+  background-color: gold;
+  overflow: hidden;
+}

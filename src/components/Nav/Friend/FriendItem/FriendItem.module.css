@@ -1,0 +1,4 @@
+.avaitem img {
+  width: 30px;
+  clip-path: circle(50%);
+}

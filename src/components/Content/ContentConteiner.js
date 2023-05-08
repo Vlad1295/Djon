@@ -8,6 +8,7 @@ import {
 } from "../Redux/Reducer/profilePageReducer";
 import { useParams } from "react-router-dom";
 import { withAuthNavigate } from "../../HOC/withAuthNavigate";
+import { compose } from "redux";
 
 function ContentConteiner(props) {
   const { userId } = useParams();
@@ -18,18 +19,19 @@ function ContentConteiner(props) {
 
   return (
     <div>
-      <Content profile={props.profile}
-      />
+      <Content profile={props.profile} />
     </div>
   );
 }
 
 let mapStateToProps = (state) => ({
-  profile: state.profilePage.profile
+  profile: state.profilePage.profile,
 });
 
-let ConnectAuthNavigate=withAuthNavigate(ContentConteiner)
+export default compose(
+  connect(mapStateToProps, { setUserProfile, usersProfileThunk })
+ , withAuthNavigate
+  )(ContentConteiner )
 
-export default connect(mapStateToProps, { setUserProfile, usersProfileThunk })(
-  ConnectAuthNavigate
-);
+
+

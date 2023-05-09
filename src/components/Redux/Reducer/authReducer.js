@@ -1,4 +1,4 @@
-import { usersAPI } from "../../../API/getUsers";
+import { authMeAPI } from "../../../API/authMeApi";
 
 let initialState = {
   id: null,
@@ -28,7 +28,7 @@ export const setUserData = (id, email, login) => ({
 
 export const registrationMeThunk = () => {
   return (dispatch) => {
-    usersAPI.registrationMe().then((data) => {
+    authMeAPI.registrationMe().then((data) => {
       if (data.resultCode === 0) {
         let { id, login, email } = data.data;
         dispatch(setUserData(id, login, email));

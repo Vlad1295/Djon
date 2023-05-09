@@ -31,11 +31,4 @@ export const usersAPI = {
       return response.data;
     });
   },
-  registrationMe(){
-    return instance.get('auth/me')
-   .then(response=>{
-     return response.data
-   })
-  } 
-  
 };

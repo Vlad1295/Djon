@@ -8,7 +8,7 @@ function nav(props) {
     <nav className={na.nav}>
       <div className={na.item}>
         <NavLink to="profile" activeClassName={na.active}>
-          Посты
+          Профиль
         </NavLink>
       </div>
       <div className={na.item}>

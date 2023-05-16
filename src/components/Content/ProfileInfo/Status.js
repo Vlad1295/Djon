@@ -21,6 +21,7 @@ class Status extends React.Component {
       status: e.currentTarget.value,
     });
   };
+  
 
   render() {
     return (
@@ -32,9 +33,7 @@ class Status extends React.Component {
         ) : (
           <div>
             <input
-              onChange={
-                this.onChangeStatus
-              }
+              onChange={this.onChangeStatus}
               onBlur={this.unchangeEditMode}
               value={this.state.status}
             />

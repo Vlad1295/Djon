@@ -1,41 +1,23 @@
-import react from "react";
-import pa from "./Post.module.css";
+import style from "./Post.module.css";
 import PostItem from "./PostItem/PostItem";
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { FormPost } from "../../Form/FormPost";
+
+
 
 function MyPosts(props) {
   let postsElements = props.pos.map((p) => (
     <PostItem message={p.message} like={p.like} />
   ));
 
-  let newPostElement = React.createRef();
-
-  let addPostt = () => {
-    props.addPostActionCreater();
-  };
-
-  let onPostChange = () => {
-    let text = newPostElement.current.value;
-    props.updateNewPostActionCreater(text);
-  };
-
   return (
-    <div className={pa.postBlack}>
+    <div className={style.postBlack}>
       <h3>My posts</h3>
+      <div className={style.post}>{postsElements}</div>
       <div>
-        <div>
-          <textarea
-            ref={newPostElement}
-            onChange={onPostChange}
-            value={props.newPostText}
-          ></textarea>
-        </div>
-        <div>
-          <button onClick={addPostt}>Добавить </button>
-        </div>
+        <FormPost addPostt={props. addPostActionCreater} />
       </div>
-      <div className={pa.post}>{postsElements}</div>
     </div>
   );
 }

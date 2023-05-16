@@ -12,14 +12,12 @@ import { compose } from "redux";
 const mapStateToProps = (state) => {
   return {
     messagePage: state.messagePage,
-    newMessageBody: state.messagePage.newMessageBody,
   };
 };
 
 
 const DialogContainer = compose (
  connect(mapStateToProps, {
-  newMessageBody,
   sendMessage,
 })
  , withAuthNavigate)(Dialog)

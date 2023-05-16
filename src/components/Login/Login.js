@@ -1,8 +1,25 @@
-import react from "react";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-function login(props){
-  return <h1>Надо войти в лич.каб. https://social-network.samuraijs.com</h1>
-  
-} 
+function Login() {
+  const { register, handleSubmit } = useForm({ defaultValues: {} });
+  const submit: SubmitHandler = (data) => {
+    console.log(data);
+  };
 
-export default login
+  return (
+    <>
+      <form onSubmit={handleSubmit(submit)}>
+        <h1>Login</h1>
+        <input placeholder={"name"} type="text" {...register("name")} />
+        <input placeholder={"password"} type="number" {...register("age")} />
+
+        <input type="checkbox" />
+
+        <button>Send</button>
+      </form>
+    </>
+  );
+}
+
+export default Login;

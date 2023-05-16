@@ -9,32 +9,23 @@ let initialState = {
     { id: 2, name: "Ира" },
     { id: 3, name: "Даша" },
   ],
-  newMessageBody: "your message",
+  
 };
 
 const messagePageReducer = (state = initialState, action) => {
-  let stateCopy;
   switch (action.type) {
-    case "NEW_MESSAGE_BODY":
-      stateCopy = { ...state, newMessageBody: action.body };
-      return stateCopy;
     case "SEND_MESSAGE":
-      let body = state.newMessageBody;
-      stateCopy = {
+      return {
         ...state,
-        newMessageBody: "",
-        messagedata: [...state.messagedata, { id: 4, message: body }],
+        messagedata: [...state.messagedata, { id: 4, message: action.newMessageBody }],
       };
-      return stateCopy;
+
     default:
       return state;
   }
 };
 
-export const newMessageBody = (text) => ({
-  type: "NEW_MESSAGE_BODY",
-  body: text,
+export const sendMessage = (newMessageBody) => ({
+  type: "SEND_MESSAGE", newMessageBody
 });
-
-export const sendMessage = () => ({ type: "SEND_MESSAGE" });
 export default messagePageReducer;

@@ -5,7 +5,6 @@ let initialState = {
     { id: 1, message: "my First post", like: 52 },
     { id: 2, message: "my second post", like: 34 },
   ],
-  newPostText: "hello",
   profile: null,
   status: "",
 };
@@ -16,18 +15,12 @@ const profilePageReducer = (state = initialState, action) => {
     case "ADD_Post": {
       let newPost = {
         id: 3,
-        message: state.newPostText,
+        message: action.newPostText,
         like: 0,
       };
       let stateCopy = { ...state };
       stateCopy.pos = [...state.pos];
       stateCopy.pos.push(newPost);
-      stateCopy.newPostText = "";
-      return stateCopy;
-    }
-    case "UPDATE_NEW_POST_TEXT": {
-      let stateCopy = { ...state };
-      stateCopy.newPostText = action.newText;
       return stateCopy;
     }
     case "SET_USER_PROFILE": {
@@ -41,12 +34,9 @@ const profilePageReducer = (state = initialState, action) => {
   }
 };
 
-export const updateNewPostActionCreater = (text) => {
-  return { type: "UPDATE_NEW_POST_TEXT", newText: text };
-};
 
-export const addPostActionCreater = () => {
-  return { type: "ADD_Post" };
+export const addPostActionCreater = (newPostText) => {
+  return { type: "ADD_Post", newPostText};
 };
 export const setUserStatus = (status) => {
   return { type: "SET_USER_STATUS", status };

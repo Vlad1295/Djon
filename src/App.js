@@ -1,7 +1,7 @@
 import HelloContainer from "./components/Header/HelloContainer";
 import ContentConteiner from "./components/Content/ContentConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
-import Login from "./components/Login/Login"
+import {Login} from "./components/Login/Login"
 import Nav from "./components/Nav/Nav";
 import DialogContainer from "./components/Dialogs/DialogsContainer";
 import "./Hello.css";

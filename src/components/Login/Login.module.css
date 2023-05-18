@@ -1,0 +1,20 @@
+.box{
+  display: flex;
+  flex-direction: column;
+}
+.errors{
+  font-size: 9px;
+  font-weight: 300;
+  color: red;
+} 
+.errorspassword{
+  font-size: 9px;
+  font-weight: 300;
+  color: red;
+} 
+.inputpassword{
+  border: solid red 1px;
+} 
+.inputlogin{
+  border: solid red 1px;
+} 

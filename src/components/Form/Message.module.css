@@ -1,0 +1,11 @@
+.newMessageBody{
+  color:red;
+  font-size:9px ;
+  font-weight:300; 
+} 
+.input{
+  border:solid red 1px;
+}
+.input1{
+  border:solid yellow 1px;
+}

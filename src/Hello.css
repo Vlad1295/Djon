@@ -11,3 +11,9 @@
   background-color: gold;
   overflow: hidden;
 }
+.header{
+  grid-area: hello;
+  height: 40px;
+  border: 1px solid red;
+  background-color: silver;
+}

@@ -4,22 +4,19 @@ import * as Yup from "yup";
 import style from "./Login.module.css";
 
 const validationSchema = Yup.object().shape({
-  login: Yup.string().required("Обязательно к заполнению"),
+  email: Yup.string().required("Обязательно к заполнению"),
   password: Yup.string().required("Обязательно к заполнению"),
 });
 export const Login = (props) => {
-  const Submit = (values) => {
-    console.log(values.login, values.password);
-  };
-
   return (
     <Formik
       initialValues={{
-        login: "",
+        email: "",
         password: "",
+        rememberMe: "",
       }}
       validationSchema={validationSchema}
-      onSubmit={Submit}
+      onSubmit={values=>props.Submit(values)}
     >
       {({ errors, touched }) => (
         <Form>
@@ -27,14 +24,14 @@ export const Login = (props) => {
             <h1>Добро пожаловать!!!</h1>
             <label>Email</label>
             <Field
-              name="login"
-              placeholder="Login"
+              name="email"
+              placeholder="email"
               className={
-                errors.login && touched.login ? style.inputlogin : null
+                errors.email && touched.email ? style.inputlogin : null
               }
             />
-            {errors.login && touched.login && (
-              <div className={style.errors}>{errors.login} </div>
+            {errors.email && touched.email && (
+              <div className={style.errors}>{errors.email} </div>
             )}
             <label>Password</label>
             <Field
@@ -49,6 +46,7 @@ export const Login = (props) => {
               <div className={style.errorspassword}>{errors.password}</div>
             )}
 
+            <Field component="input" name="rememberMe" type="checkbox" />
             <button type="submit">Send</button>
           </div>
         </Form>

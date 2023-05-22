@@ -6,11 +6,14 @@ import { Navigate } from "react-router-dom";
 
 const LoginContainer = (props) => {
   const Submit = (values) => {
-    props.loginThunk(values.email, values.password, values.rememberMe);
+    props.loginThunk(values.email, values.password, values.rememberMe)
+    
   };
   if (props.isAuth) {
     return(
     <Navigate to={"/profile"} />) }
+    
+  
   return (
     <div>
       <Login Submit={Submit} />

@@ -1,35 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Content from "./Content";
-import axios, * as others from "axios";
 import { connect } from "react-redux";
 import {
   setUserProfile,
   usersProfileThunk,
   getUserStatusThunk,
-  updateUserStatusThunk
+  updateUserStatusThunk,
 } from "../Redux/Reducer/profilePageReducer";
-import { useParams } from "react-router-dom";
 import { withAuthNavigate } from "../../HOC/withAuthNavigate";
 import { compose } from "redux";
-
-function ContentConteiner(props) {
-  const { userId } = useParams();
-  let UserId =userId|| 28814;
-  useEffect(() => {
-    props.usersProfileThunk(UserId);
-  }, [UserId]);
-  props.getUserStatusThunk(UserId);
-
-  return (
-    <div>
-      <Content updateUserStatusThunk={props.updateUserStatusThunk} status={props.status} profile={props.profile} />
-    </div>
-  );
+import { withRouter } from "../../HOC/withRouter";
+class ContentConteiner extends React.Component {
+  componentDidMount() {
+    let userId = this.props.router.params.userId;
+    if (!userId) userId = this.props.autorizedUserId;
+    if (!userId) {
+      this.props.history.push("/login");
+    }
+    this.props.usersProfileThunk(userId)
+  }
+  render() {
+    return (
+      <div>
+        <Content{...this.props} 
+          updateUserStatusThunk={this.props.updateUserStatusThunk}
+          status={this.props.status}
+          profile={this.props.profile}
+        />
+      </div>
+    );
+  }
 }
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   status: state.profilePage.status,
+  autorizedUserId: state.auth.id,
+  isAyth: state.auth.isAuth,
 });
 
 export default compose(
@@ -37,7 +44,7 @@ export default compose(
     setUserProfile,
     usersProfileThunk,
     getUserStatusThunk,
-    updateUserStatusThunk
+    updateUserStatusThunk,
   }),
   withAuthNavigate
-)(ContentConteiner);
+)(withRouter(ContentConteiner));

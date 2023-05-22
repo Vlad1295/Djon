@@ -1,4 +1,5 @@
 import { authMeAPI } from "../../../API/authMeApi";
+import {Field, Form, Formik } from "formik";
 
 let initialState = {
   id: null,
@@ -22,14 +23,14 @@ const authReducer = (state = initialState, action) => {
 };
 export const setUserData = (id, email, login, isAuth) => ({
   type: SET_USER_DATA,
-  information: { id, email, login, isAuth},
+  information: { id, email, login, isAuth },
 });
 
 export const registrationMeThunk = () => {
   return (dispatch) => {
-    authMeAPI.registrationMe().then((data) => {
+   return authMeAPI.registrationMe().then((data) => {
       if (data.resultCode === 0) {
-        let { id, login, email} = data.data;
+        let { id, login, email } = data.data;
         dispatch(setUserData(id, login, email, true));
       }
     });
@@ -40,7 +41,7 @@ export const loginThunk = (email, password, rememberMe) => {
     authMeAPI.login(email, password, rememberMe).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(registrationMeThunk());
-      }
+      } 
     });
   };
 };

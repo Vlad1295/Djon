@@ -1,34 +1,51 @@
 import HelloContainer from "./components/Header/HelloContainer";
 import ContentConteiner from "./components/Content/ContentConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
-import LoginContainer from "./components/Login/LoginContainer"
+import React from "react";
+import LoginContainer from "./components/Login/LoginContainer";
 import Nav from "./components/Nav/Nav";
 import DialogContainer from "./components/Dialogs/DialogsContainer";
 import "./Hello.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { initializedAppThunk } from "./components/Redux/Reducer/appReducer.jsx";
+import Preloader from "./components/Users/Toggle";
+import { compose } from "redux";
+import { withRouter } from "./HOC/withRouter";
 
-function App(props) {
-  return (
-    <BrowserRouter>
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializedAppThunk();
+  }
+  render() {
+    if (!this.props.initialized) {
+      return <Preloader />;
+    }
+    return (
       <div className="gr">
-       <div className="header">
-        <HelloContainer />
+        <div className="header">
+          <HelloContainer />
         </div>
         <div className="gr_content">
           <Routes>
             <Route
               path="/Dialog/*"
-              element={<DialogContainer store={props.store} />}
+              element={<DialogContainer store={this.props.store} />}
             />
             <Route path="/profile/:userId?" element={<ContentConteiner />} />
             <Route path="/Users" element={<UsersContainer />} />
-            <Route path="/login" element={<LoginContainer/>} />
+            <Route path="/login" element={<LoginContainer />} />
           </Routes>
         </div>
-        <Nav state={props.state} />
+        <Nav state={this.props.state} />
       </div>
-    </BrowserRouter>
-  );
-} 
+    );
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    initialized: state.appReducer.initialized,
+  };
+};
 
-export default App;
+export default compose(withRouter,connect(mapStateToProps, {initializedAppThunk}))(App)

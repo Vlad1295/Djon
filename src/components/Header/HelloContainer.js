@@ -1,18 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios, * as others from "axios";
-import {
-  setUserData,
-  registrationMeThunk,
-  logoutThunk,
-} from "../Redux/Reducer/authReducer";
+import { setUserData, logoutThunk } from "../Redux/Reducer/authReducer";
 import Header from "./Hello";
 import { usersAPI } from "../../API/getUsers";
+import { withRouter } from "../../HOC/withRouter";
 
 class HelloContainer extends React.Component {
-  componentDidMount() {
-    this.props.registrationMeThunk();
-  }
   render() {
     return (
       <div>
@@ -27,7 +21,6 @@ const mapStateToprops = (state) => ({
   login: state.auth.login,
 });
 export default connect(mapStateToprops, {
-  setUserData,
-  registrationMeThunk,
+  
   logoutThunk,
-})(HelloContainer);
+})(withRouter(HelloContainer));

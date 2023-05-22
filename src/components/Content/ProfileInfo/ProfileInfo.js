@@ -1,6 +1,6 @@
 import react from "react";
 import s from "./ProfileInfo.module.css";
-import Preloader from "../..//Users/Toggle";
+import Preloader from "../../Users/Toggle";
 import Status from "./Status"
 
 const ProfileInfo = (props) => {

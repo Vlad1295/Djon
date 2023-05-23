@@ -1,46 +1,39 @@
-import React from "react";
+import react from "react";
+import { useState } from "react";
 
-class Status extends React.Component {
-  state = {
-    editMode: false,
-    status: this.props.status,
+const Status = (props) => {
+  let [editMode, setEditMode] = useState(false);
+  const activeEditMode = () => {
+    setEditMode(true)
+    props.updateUserStatusThunk(status) 
   };
-  changeEditMode = () => {
-    this.setState({
-      editMode: false,
-    });
+  const deactiveEditMode = () => {
+    setEditMode(false);
   };
-  unchangeEditMode = () => {
-    this.setState({
-      editMode: true,
-    });
-    this.props.updateUserStatusThunk(this.state.status);
-  };
-  onChangeStatus = (e) => {
-    this.setState({
-      status: e.currentTarget.value,
-    });
-  };
-  
+  let [status, setStatus] = useState(props.status)
+const onChangeStatus=(e)=>{
+  setStatus(e.currentTarget.value)
+} 
 
-  render() {
-    return (
-      <div>
-        {this.state.editMode ? (
-          <div>
-            <span onClick={this.changeEditMode}>{this.props.status}</span>
-          </div>
-        ) : (
-          <div>
-            <input
-              onChange={this.onChangeStatus}
-              onBlur={this.unchangeEditMode}
-              value={this.state.status}
-            />
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {editMode ? (
+        <div>
+          <span onClick={deactiveEditMode}>
+            {" "}
+            {props.status || "Статуса нет"}{" "}
+          </span>
+        </div>
+      ) : (
+        <div>
+          <input 
+          onChange={onChangeStatus}
+          value={status} 
+          onBlur={activeEditMode} />
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default Status;

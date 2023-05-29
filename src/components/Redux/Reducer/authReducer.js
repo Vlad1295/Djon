@@ -1,5 +1,5 @@
 import { authMeAPI } from "../../../API/authMeApi";
-import {Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 
 let initialState = {
   id: null,
@@ -26,32 +26,26 @@ export const setUserData = (id, email, login, isAuth) => ({
   information: { id, email, login, isAuth },
 });
 
-export const registrationMeThunk = () => {
-  return (dispatch) => {
-   return authMeAPI.registrationMe().then((data) => {
+export const registrationMeThunk = () => 
+  async (dispatch) => {
+    const data= await authMeAPI.registrationMe()
+    
       if (data.resultCode === 0) {
         let { id, login, email } = data.data;
         dispatch(setUserData(id, login, email, true));
       }
-    });
   };
+export const loginThunk = (email, password, rememberMe) => async (dispatch) => {
+  const response = await authMeAPI.login(email, password, rememberMe);
+  if (response.data.resultCode === 0) {
+    dispatch(registrationMeThunk());
+  }
 };
-export const loginThunk = (email, password, rememberMe) => {
-  return (dispatch) => {
-    authMeAPI.login(email, password, rememberMe).then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(registrationMeThunk());
-      } 
-    });
-  };
-};
-export const logoutThunk = () => {
-  return (dispatch) => {
-    authMeAPI.logout().then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(registrationMeThunk(null, null, null, false));
-      }
-    });
-  };
+
+export const logoutThunk = () => async (dispatch) => {
+  const response = await authMeAPI.logout();
+  if (response.data.resultCode === 0) {
+    dispatch(registrationMeThunk(null, null, null, false));
+  }
 };
 export default authReducer;

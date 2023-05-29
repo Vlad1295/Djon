@@ -34,9 +34,8 @@ const profilePageReducer = (state = initialState, action) => {
   }
 };
 
-
 export const addPostActionCreater = (newPostText) => {
-  return { type: "ADD_Post", newPostText};
+  return { type: "ADD_Post", newPostText };
 };
 export const setUserStatus = (status) => {
   return { type: "SET_USER_STATUS", status };
@@ -46,28 +45,20 @@ export const setUserProfile = (profile) => {
   return { type: "SET_USER_PROFILE", profile };
 };
 
-export const usersProfileThunk = (UserId) => {
-  return (dispatch) => {
-    profileAPI.usersProfile(UserId).then((data) => {
-      dispatch(setUserProfile(data));
-    });
-  };
+export const usersProfileThunk = (UserId) => async (dispatch) => {
+  const data = await profileAPI.usersProfile(UserId);
+  dispatch(setUserProfile(data));
 };
-export const getUserStatusThunk = (userId) => {
-  return (dispatch) => {
-    profileAPI.getUserStatus(userId).then((data) => {
-      dispatch(setUserStatus(data));
-    });
-  };
+
+export const getUserStatusThunk = (userId) => async (dispatch) => {
+  const data = await profileAPI.getUserStatus(userId);
+  dispatch(setUserStatus(data));
 };
-export const updateUserStatusThunk = (status) => {
-  return (dispatch) => {
-    profileAPI.updateUserStatus(status).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setUserStatus(status));
-      }
-    });
-  };
+export const updateUserStatusThunk = (status) => async (dispatch) => {
+  const data = await profileAPI.updateUserStatus(status);
+  if (data.resultCode === 0) {
+    dispatch(setUserStatus(status));
+  }
 };
 
 export default profilePageReducer;

@@ -1,9 +1,8 @@
-import React from "react";
+import React,  { useState }  from "react";
 import { NavLink } from "react-router-dom";
-import us from "./Users.module.css";
+import style from "./Users.module.css";
 import photo from "../../Imgs/i.jpeg";
 import { usersAPI } from "../../API/getUsers";
-
 
 const Users = (props) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -11,31 +10,41 @@ const Users = (props) => {
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
   }
+  let portionSize = 5;
+  let portionCount = Math.ceil(pagesCount / portionSize);
+  let [portionNumber, changePageNumber] = useState(1);
+
+  let leftBorderPortion = (portionNumber - 1) * portionSize + 1;
+  let rightBorderPortion = portionNumber * portionSize;
 
   return (
     <div>
       <div>
-        {pages.map((p) => {
-          return (
-            <button
-              className={props.currentPage === p && us.page}
-              onClick={(e) => {
-                props.onPageChange(p);
-              }}
-            >
-              {p}
-            </button>
-          );
-        })}
+        {portionNumber>1&&<button onClick={()=>{changePageNumber(portionNumber-1)}} >Назад</button>} 
+        {pages
+          .filter((p) => p >= leftBorderPortion && p <= rightBorderPortion)
+          .map((p) => {
+            return (
+              <button
+                className={props.currentPage === p && style.page}
+                onClick={(e) => {
+                  props.onPageChange(p);
+                }}
+              >
+                {p}
+              </button>
+            );
+          })}
+         {pagesCount>portionNumber&&<button onClick={()=>{changePageNumber(portionNumber+1)}} >Вперед</button>}  
       </div>
 
       {props.users.map((u) => (
         <div key={u.id}>
-          <div className={us.text}>
+          <div className={style.text}>
             <div>
               <NavLink to={"/profile/" + u.id}>
                 <img
-                  className={us.photo}
+                  className={style.photo}
                   src={u.photos.small ? u.photos.small : photo}
                 />
               </NavLink>
@@ -44,13 +53,7 @@ const Users = (props) => {
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toggleIsFollowingProgress(true, u.id);
-                    usersAPI.unfollowUser(u.id).then((data) => {
-                      if (data.resultCode === 0) {
-                        props.unfollow(u.id);
-                      }
-                    });
-                    props.toggleIsFollowingProgress(false, u.id);
+                    props.unfollowThunk(u.id);
                   }}
                 >
                   Unfollow
@@ -59,13 +62,7 @@ const Users = (props) => {
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toggleIsFollowingProgress(true, u.id);
-                    usersAPI.followUser(u.id).then((data) => {
-                      if (data.resultCode === 0) {
-                        props.follow(u.id);
-                      }
-                    });
-                    props.toggleIsFollowingProgress(false, u.id);
+                    props.followThunk(u.id);
                   }}
                 >
                   Follow

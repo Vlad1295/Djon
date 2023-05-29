@@ -18,6 +18,7 @@ class ContentConteiner extends React.Component {
       this.props.history.push("/login");
     }
     this.props.usersProfileThunk(userId)
+    this.props.getUserStatusThunk(userId)
   }
   render() {
     return (

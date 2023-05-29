@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  follow,
-  unfollow,
   setCurrentPage,
-  toggleIsFollowingProgress,
   getUsersThunk,
+  unfollowThunk,
+  followThunk, 
 } from "../Redux/Reducer/usersPageReducer";
 import Users from "./Users";
 import Preloader from "./Toggle";
@@ -27,14 +26,14 @@ class UsersContainer extends React.Component {
       <>
         {this.props.isFetching ? <Preloader /> : null}
         <Users
+          unfollowThunk={this.props.unfollowThunk} 
+          followThunk={this.props.followThunk} 
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}
           currentPage={this.props.currentPage}
           onPageChange={this.onPageChange}
           users={this.props.users}
-          follow={this.props.follow}
-          unfollow={this.props.unfollow}
-          toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
+          
           followingInProgress={this.props.followingInProgress}
           isAuth={this.props.isAuth}
         />
@@ -56,11 +55,10 @@ let mapStateToProps = (state) => {
 };
 export default compose(
  connect(mapStateToProps, {
-  follow,
-  unfollow,
   setCurrentPage,
   getUsersThunk,
-  toggleIsFollowingProgress,
+  unfollowThunk, 
+  followThunk, 
 })
  ,withAuthNavigate)(UsersContainer)
 

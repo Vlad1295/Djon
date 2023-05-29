@@ -10,9 +10,7 @@ export const usersAPI = {
   getUsers(currentPage, pageSize) {
     return instance
       .get(`Users?page=${currentPage}&count=${pageSize}`)
-      .then((response) => {
-        return response.data;
-      });
+     .then((response)=>{return response.data} )
   },
 
   followUser(id) {

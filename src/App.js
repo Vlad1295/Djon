@@ -1,10 +1,11 @@
+import  LazyLoading  from "./HOC/LazyLoading";
 import HelloContainer from "./components/Header/HelloContainer";
 import ContentConteiner from "./components/Content/ContentConteiner";
 import UsersContainer from "./components/Users/UsersContainer";
-import React from "react";
+import React, { Suspense } from "react";
 import LoginContainer from "./components/Login/LoginContainer";
 import Nav from "./components/Nav/Nav";
-import DialogContainer from "./components/Dialogs/DialogsContainer";
+
 import "./Hello.css";
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -12,11 +13,16 @@ import { initializedAppThunk } from "./components/Redux/Reducer/appReducer.jsx";
 import Preloader from "./components/Users/Toggle";
 import { compose } from "redux";
 import { withRouter } from "./HOC/withRouter";
+//Lazy loading
+const DialogContainer = React.lazy(() =>
+  import("./components/Dialogs/DialogsContainer")
+);
 
 class App extends React.Component {
   componentDidMount() {
     this.props.initializedAppThunk();
   }
+
   render() {
     if (!this.props.initialized) {
       return <Preloader />;
@@ -30,7 +36,9 @@ class App extends React.Component {
           <Routes>
             <Route
               path="/Dialog/*"
-              element={<DialogContainer store={this.props.store} />}
+              element={
+                <LazyLoading/>
+              }
             />
             <Route path="/profile/:userId?" element={<ContentConteiner />} />
             <Route path="/Users" element={<UsersContainer />} />
@@ -48,4 +56,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(withRouter,connect(mapStateToProps, {initializedAppThunk}))(App)
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { initializedAppThunk })
+)(App);

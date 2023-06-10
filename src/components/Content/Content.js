@@ -8,7 +8,11 @@ const Content = (props) => {
  
   return (
     <div>
-      <ProfileInfo updateUserStatusThunk={props.updateUserStatusThunk} status={props.status} profile={props.profile} />
+      <ProfileInfo 
+      errors={props.errors} 
+      updateProfile={props.updateProfile} 
+      isOwner={props.isOwner} savePhotoThunk={props.savePhotoThunk} 
+      updateUserStatusThunk={props.updateUserStatusThunk} status={props.status} profile={props.profile} />
       <MyPostsContainer />
     </div>
   );

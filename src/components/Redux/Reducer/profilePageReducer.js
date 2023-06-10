@@ -7,6 +7,7 @@ let initialState = {
   ],
   profile: null,
   status: "",
+  errors: "",
 };
 
 const profilePageReducer = (state = initialState, action) => {
@@ -26,14 +27,25 @@ const profilePageReducer = (state = initialState, action) => {
     case "SET_USER_PROFILE": {
       return { ...state, profile: action.profile };
     }
+    case "SAVE_PHOTO_SUCCESS": {
+      return { ...state, profile: { ...state.profile, photos: action.photo } };
+    }
     case "SET_USER_STATUS": {
       return { ...state, status: action.status };
+    }
+    case "SET_ERRORS": {
+      return { ...state, errors: action.errors };
     }
     default:
       return state;
   }
 };
-
+export const setErrors = (errors) => {
+  return {
+    type: "SET_ERRORS",
+    errors,
+  };
+};
 export const addPostActionCreater = (newPostText) => {
   return { type: "ADD_Post", newPostText };
 };
@@ -43,6 +55,15 @@ export const setUserStatus = (status) => {
 
 export const setUserProfile = (profile) => {
   return { type: "SET_USER_PROFILE", profile };
+};
+export const savePhotoSuccess = (photo) => {
+  return { type: "SAVE_PHOTO_SUCCESS", photo };
+};
+export const savePhotoThunk = (photo) => async (dispatch) => {
+  const response = await profileAPI.avatarProfile(photo);
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(response.data.data.photos));
+  }
 };
 
 export const usersProfileThunk = (UserId) => async (dispatch) => {
@@ -60,5 +81,22 @@ export const updateUserStatusThunk = (status) => async (dispatch) => {
     dispatch(setUserStatus(status));
   }
 };
+export const updateProfile =
+  (fullName, lookingForAJobDescription, lookingForAJob, aboutMe, contacts) =>
+  async (dispatch, getState) => {
+    let data = await profileAPI.sendProfile(
+      fullName,
+      lookingForAJobDescription,
+      lookingForAJob,
+      aboutMe,
+      contacts
+    );
+    const userId = getState().auth.id;
+    dispatch(usersProfileThunk(userId))
+    dispatch(setErrors(null));
+    if (data.resultCode === 1) {
+      dispatch(setErrors(data.messages[0]));
+    }
+  };
 
 export default profilePageReducer;

@@ -1,4 +1,4 @@
-import react from "react";
+
 import m from "./message.module.css";
 
 function Message(props) {

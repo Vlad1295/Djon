@@ -6,6 +6,7 @@ let initialState = {
   email: null,
   login: null,
   isAuth: false,
+  
 };
 
 const SET_USER_DATA = "SET_USER_DATA";
@@ -26,15 +27,14 @@ export const setUserData = (id, email, login, isAuth) => ({
   information: { id, email, login, isAuth },
 });
 
-export const registrationMeThunk = () => 
-  async (dispatch) => {
-    const data= await authMeAPI.registrationMe()
-    
-      if (data.resultCode === 0) {
-        let { id, login, email } = data.data;
-        dispatch(setUserData(id, login, email, true));
-      }
-  };
+export const registrationMeThunk = () => async (dispatch) => {
+  const data = await authMeAPI.registrationMe();
+
+  if (data.resultCode === 0) {
+    let { id, login, email } = data.data;
+    dispatch(setUserData(id, login, email, true));
+  }
+};
 export const loginThunk = (email, password, rememberMe) => async (dispatch) => {
   const response = await authMeAPI.login(email, password, rememberMe);
   if (response.data.resultCode === 0) {

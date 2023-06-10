@@ -24,4 +24,22 @@ export const profileAPI = {
         return response.data;
       });
   },
+  avatarProfile(photoFile) {
+    const formData = new FormData();
+    formData.append("image", photoFile);
+    return instance.put(`profile/photo`, formData);
+  },
+  sendProfile(fullName, lookingForAJobDescription, lookingForAJob, aboutMe, contacts) {
+    return instance
+      .put(`profile`, {
+        fullName,
+        lookingForAJobDescription,
+        lookingForAJob,
+        aboutMe,
+        contacts,
+      })
+      .then((response) => {
+        return response.data;
+      });
+  },
 };

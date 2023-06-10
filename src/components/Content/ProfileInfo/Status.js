@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 const Status = (props) => {
   let [editMode, setEditMode] = useState(false);
   const activeEditMode = () => {
-    setEditMode(true);
+    setEditMode(false);
     props.updateUserStatusThunk(status);
   };
   const deactiveEditMode = () => {
-    setEditMode(false);
+    setEditMode(true);
   };
   let [status, setStatus] = useState(props.status);
 
@@ -24,18 +24,16 @@ const Status = (props) => {
     <div>
       {editMode ? (
         <div>
-          <span onClick={deactiveEditMode}>
-            {" "}
-            {props.status || "Статуса нет"}{" "}
-          </span>
-        </div>
-      ) : (
-        <div>
           <input
             onChange={onChangeStatus}
             value={status}
             onBlur={activeEditMode}
           />
+        </div>
+      ) : (
+        <div>
+          <span> {props.status || "Статуса нет"} </span>
+          <button onClick={deactiveEditMode}>send</button>
         </div>
       )}
     </div>

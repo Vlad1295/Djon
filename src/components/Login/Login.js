@@ -2,7 +2,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import style from "./Login.module.css";
-import {createrField} from "./LoginContainer" 
+import { createrField } from "./LoginContainer";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Обязательно к заполнению"),
@@ -15,6 +15,7 @@ export const Login = (props) => {
         email: "",
         password: "",
         rememberMe: "",
+        captcha:"", 
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => props.Submit(values)}
@@ -46,8 +47,13 @@ export const Login = (props) => {
             )}
             {createrField("rememberMe", null, null, { type: "checkbox" })}
 
+{props.captcha && <img src={props.captcha} />}
+
+          {props.captcha &&
+            createrField("captcha", null, null, { type: "textarea" })}
             <button type="submit">Send</button>
           </div>
+          
         </Form>
       )}
     </Formik>

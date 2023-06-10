@@ -6,7 +6,7 @@ let initialState = {
   email: null,
   login: null,
   isAuth: false,
-  
+  captchaUrl: null,
 };
 
 const SET_USER_DATA = "SET_USER_DATA";
@@ -18,6 +18,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         ...action.information,
       };
+    case "SET_CAPTCHA": {
+      return {
+        ...state,
+        captchaUrl: action.captchaUrl,
+      };
+    }
     default:
       return state;
   }
@@ -26,6 +32,9 @@ export const setUserData = (id, email, login, isAuth) => ({
   type: SET_USER_DATA,
   information: { id, email, login, isAuth },
 });
+export const setCaptchaUrl = (captchaUrl) => {
+  return { type: "SET_CAPTCHA", captchaUrl };
+};
 
 export const registrationMeThunk = () => async (dispatch) => {
   const data = await authMeAPI.registrationMe();
@@ -33,12 +42,16 @@ export const registrationMeThunk = () => async (dispatch) => {
   if (data.resultCode === 0) {
     let { id, login, email } = data.data;
     dispatch(setUserData(id, login, email, true));
-  }
+  } 
 };
-export const loginThunk = (email, password, rememberMe) => async (dispatch) => {
-  const response = await authMeAPI.login(email, password, rememberMe);
+export const loginThunk = (email, password, rememberMe, captcha) => async (dispatch) => {
+  const response = await authMeAPI.login(email, password, rememberMe, captcha);
   if (response.data.resultCode === 0) {
     dispatch(registrationMeThunk());
+  }
+  else if (response.data.resultCode === 10) {
+    const response = await authMeAPI.captcha();
+    dispatch(setCaptchaUrl(response.data.url));
   }
 };
 

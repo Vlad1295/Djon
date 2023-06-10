@@ -13,7 +13,7 @@ export const createrField = (name, placeholder, style, props) => (
 
 const LoginContainer = (props) => {
   const Submit = (values) => {
-    props.loginThunk(values.email, values.password, values.rememberMe)
+    props.loginThunk(values.email, values.password, values.rememberMe, values.captcha)
   };
   if (props.isAuth) {
     return(
@@ -22,13 +22,15 @@ const LoginContainer = (props) => {
   
   return (
     <div>
-      <Login Submit={Submit} />
+      <Login captcha={props.captcha} 
+      Submit={Submit} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
+    captcha:state.auth.captchaUrl,
     isAuth: state.auth.isAuth,
   };
 };

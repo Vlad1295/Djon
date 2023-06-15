@@ -5,7 +5,7 @@ import {
   getUsersThunk,
   unfollowThunk,
   followThunk, 
-} from "../Redux/Reducer/usersPageReducer";
+} from "../Redux/Reducer/usersPageReducer.ts";
 import Users from "./Users";
 import Preloader from "./Toggle";
 import { withAuthNavigate } from "../../HOC/withAuthNavigate";

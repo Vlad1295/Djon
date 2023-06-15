@@ -1,16 +1,21 @@
 import { profileAPI } from "../../../API/profileAPI";
+import { PhotosType, ProfileType, PosType } from "../Types/Types.ts";
 
+type InitialStateType = typeof initialState;
 let initialState = {
   pos: [
     { id: 1, message: "my First post", like: 52 },
     { id: 2, message: "my second post", like: 34 },
-  ],
-  profile: null,
+  ] as Array<PosType>,
+  profile: null as ProfileType | null,
   status: "",
   errors: "",
 };
 
-const profilePageReducer = (state = initialState, action) => {
+const profilePageReducer = (
+  state = initialState,
+  action: any
+): InitialStateType => {
   let stateCopy;
   switch (action.type) {
     case "ADD_Post": {
@@ -40,23 +45,44 @@ const profilePageReducer = (state = initialState, action) => {
       return state;
   }
 };
-export const setErrors = (errors) => {
+type SetErrorsType = {
+  type: "SET_ERRORS";
+  errors: string;
+};
+export const setErrors = (errors: string): SetErrorsType => {
   return {
     type: "SET_ERRORS",
     errors,
   };
 };
-export const addPostActionCreater = (newPostText) => {
+type AddPostActionCreaterType = {
+  type: "ADD_Post";
+  newPostText: string;
+};
+export const addPostActionCreater = (
+  newPostText: string
+): AddPostActionCreaterType => {
   return { type: "ADD_Post", newPostText };
 };
-export const setUserStatus = (status) => {
+type SetUserStatusType = {
+  type: "SET_USER_STATUS";
+  status: string;
+};
+export const setUserStatus = (status: string): SetUserStatusType => {
   return { type: "SET_USER_STATUS", status };
 };
-
-export const setUserProfile = (profile) => {
+type SetUserProfileType = {
+  type: "SET_USER_PROFILE";
+  profile: string;
+};
+export const setUserProfile = (profile: string): SetUserProfileType => {
   return { type: "SET_USER_PROFILE", profile };
 };
-export const savePhotoSuccess = (photo) => {
+type SavePhotoSuccessType = {
+  type: "SAVE_PHOTO_SUCCESS";
+  photo: PhotosType;
+};
+export const savePhotoSuccess = (photo: PhotosType): SavePhotoSuccessType => {
   return { type: "SAVE_PHOTO_SUCCESS", photo };
 };
 export const savePhotoThunk = (photo) => async (dispatch) => {
@@ -92,7 +118,7 @@ export const updateProfile =
       contacts
     );
     const userId = getState().auth.id;
-    dispatch(usersProfileThunk(userId))
+    dispatch(usersProfileThunk(userId));
     dispatch(setErrors(null));
     if (data.resultCode === 1) {
       dispatch(setErrors(data.messages[0]));

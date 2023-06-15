@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loginThunk } from "../Redux/Reducer/authReducer";
+import { loginThunk } from "../Redux/Reducer/authReducer.ts";
 import { Login } from "./Login";
 import { Navigate } from "react-router-dom";
 import { Field } from "formik"

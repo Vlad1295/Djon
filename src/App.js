@@ -9,7 +9,7 @@ import Nav from "./components/Nav/Nav";
 import "./Hello.css";
 import { Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { initializedAppThunk } from "./components/Redux/Reducer/appReducer.jsx";
+import { initializedAppThunk } from "./components/Redux/Reducer/appReducer.ts";
 import Preloader from "./components/Users/Toggle";
 import { compose } from "redux";
 import { withRouter } from "./HOC/withRouter";

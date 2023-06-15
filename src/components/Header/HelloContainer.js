@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios, * as others from "axios";
-import { setUserData, logoutThunk } from "../Redux/Reducer/authReducer";
+import { setUserData, logoutThunk } from "../Redux/Reducer/authReducer.ts";
 import Header from "./Hello";
 import { usersAPI } from "../../API/getUsers";
 import { withRouter } from "../../HOC/withRouter";

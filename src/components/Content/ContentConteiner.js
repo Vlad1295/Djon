@@ -8,7 +8,7 @@ import {
   updateUserStatusThunk,
   savePhotoThunk,
   updateProfile,
-} from "../Redux/Reducer/profilePageReducer";
+} from "../Redux/Reducer/profilePageReducer.ts";
 import { withAuthNavigate } from "../../HOC/withAuthNavigate";
 import { compose } from "redux";
 import { withRouter } from "../../HOC/withRouter";

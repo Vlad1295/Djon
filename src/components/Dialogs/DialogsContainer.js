@@ -4,7 +4,7 @@ import { withAuthNavigate } from "../../HOC/withAuthNavigate";
 import {
   sendMessage,
   newMessageBody,
-} from "../Redux/Reducer/messagePageReducer";
+} from "../Redux/Reducer/messagePageReducer.ts";
 import Dialog from "./Dialogs";
 import { connect } from "react-redux";
 import { compose } from "redux";

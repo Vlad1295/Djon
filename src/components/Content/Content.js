@@ -5,7 +5,6 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
 const Content = (props) => {
- 
   return (
     <div>
       <ProfileInfo 

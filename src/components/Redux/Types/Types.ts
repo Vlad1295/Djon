@@ -1,4 +1,4 @@
- export type PhotosType = {
+export type PhotosType = {
   small: string;
   large: string;
 };
@@ -24,8 +24,4 @@ export type PosType = {
   id: number;
   message: string;
   like: number;
-};
-export type DialogDataType = {
-  id: number;
-  name: string;
 };

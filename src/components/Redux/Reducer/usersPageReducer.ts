@@ -1,5 +1,6 @@
+
 import { usersAPI } from "../../../API/getUsers";
-import  PhotosType  from "../Types/Types";
+import { PhotosType } from "../Types/Types";
 
 type UsersType = {
   id: number;

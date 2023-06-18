@@ -3,7 +3,7 @@ import React from "react";
 const Preloader = (props) => {
   return (
     <div>
-      <img srcSet="../../200w.gif" />
+      <img srcSet="../../200w.gif" alt="f" />
     </div>
   );
 };

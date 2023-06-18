@@ -1,3 +1,4 @@
+
 import { profileAPI } from "../../../API/profileAPI";
 import { PhotosType, ProfileType, PosType } from "../Types/Types.ts";
 
